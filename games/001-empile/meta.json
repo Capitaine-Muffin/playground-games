@@ -1,7 +1,10 @@
 {
   "title": "Empile",
-  "pitch": "Un bloc glisse, tu le lâches. Ce qui dépasse tombe, et la tour rétrécit à chaque erreur.",
-  "genre": ["arcade", "précision"],
+  "pitch": "TEST D'APERÇU — si tu lis cette phrase, tu es sur l'aperçu de la branche, pas sur le site.",
+  "genre": [
+    "arcade",
+    "précision"
+  ],
   "controls": "1 touche",
   "created": "2026-08-18",
   "status": "prototype",
