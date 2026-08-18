@@ -40,6 +40,23 @@ commentaire pose le lien. C'est là que le jeu se teste au téléphone — donc
 généré : un conflit dessus ne se résout jamais à la main, on relance
 `node tools/build-index.mjs`.
 
+## Accompagner une personne non-développeuse
+
+Quand une personne demande à l'IA de créer ou modifier un jeu, elle ne doit pas
+avoir à manipuler Git elle-même. L'IA prend en charge le parcours complet :
+
+1. créer une branche `jeu/<NNN-slug>` pour un nouveau jeu (ou réutiliser la
+   branche et la PR existantes pour une modification) ;
+2. créer ou modifier les fichiers du jeu, puis régénérer `games.json` ;
+3. lancer le jeu localement et exécuter les vérifications ;
+4. committer, pousser et ouvrir une PR de brouillon ;
+5. attendre que l'aperçu GitHub soit publié et donner à la personne son lien
+   mobile cliquable.
+
+Pour une modification d'un jeu déjà en PR, l'IA pousse un nouveau commit sur la
+**même branche** : l'aperçu conserve la même adresse. L'IA explique en termes
+simples ce qui a changé et ne fusionne jamais la PR sans demande explicite.
+
 ## Créer un nouveau jeu
 
 ```bash
