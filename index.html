@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>playground-games — l'atelier</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='rgb(79,70,229)'/%3E%3Crect%20x='6'%20y='21'%20width='20'%20height='5'%20rx='1.5'%20fill='rgba(255,255,255,.95)'/%3E%3Crect%20x='8.5'%20y='14'%20width='15'%20height='5'%20rx='1.5'%20fill='rgba(255,255,255,.72)'/%3E%3Crect%20x='11'%20y='7'%20width='10'%20height='5'%20rx='1.5'%20fill='rgba(255,255,255,.48)'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --fond: #f6f7f9;
+    --carte: #ffffff;
+    --bord: #e3e6ea;
+    --texte: #16181d;
+    --doux: #6b7280;
+    --accent: #4f46e5;
+    --ok: #15803d;
+    --ok-fond: #dcfce7;
+    --info: #1d4ed8;
+    --info-fond: #dbeafe;
+    --neutre-fond: #eef0f3;
+    --mort: #9ca3af;
+    --ombre: 0 1px 2px rgba(16, 24, 40, .06), 0 4px 12px rgba(16, 24, 40, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fond: #0e1014;
+      --carte: #171a21;
+      --bord: #262b35;
+      --texte: #e8eaed;
+      --doux: #9aa3b2;
+      --accent: #818cf8;
+      --ok: #4ade80;
+      --ok-fond: #14321f;
+      --info: #93b4fd;
+      --info-fond: #16233f;
+      --neutre-fond: #21262f;
+      --mort: #5b6472;
+      --ombre: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2.5rem 1.25rem 4rem;
+    background: var(--fond);
+    color: var(--texte);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1080px; margin: 0 auto; }
+
+  header h1 {
+    margin: 0 0 .35rem;
+    font-size: clamp(1.7rem, 5vw, 2.4rem);
+    letter-spacing: -.02em;
+  }
+  header p { margin: 0; color: var(--doux); max-width: 60ch; }
+  header a { color: var(--accent); }
+
+  .stats {
+    display: flex; flex-wrap: wrap; gap: .5rem 2rem;
+    margin: 1.75rem 0 1.25rem; padding: 1rem 1.25rem;
+    background: var(--carte); border: 1px solid var(--bord);
+    border-radius: 12px; box-shadow: var(--ombre);
+  }
+  .stat b { display: block; font-size: 1.5rem; line-height: 1.1; }
+  .stat span { font-size: .8rem; color: var(--doux); text-transform: uppercase; letter-spacing: .05em; }
+
+  .filtres { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
+  .filtres button {
+    font: inherit; font-size: .875rem; cursor: pointer;
+    padding: .4rem .85rem; border-radius: 999px;
+    border: 1px solid var(--bord); background: var(--carte); color: var(--doux);
+  }
+  .filtres button[aria-pressed="true"] {
+    background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600;
+  }
+
+  .grille { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+
+  .jeu {
+    display: flex; flex-direction: column;
+    background: var(--carte); border: 1px solid var(--bord);
+    border-radius: 12px; padding: 1.15rem; box-shadow: var(--ombre);
+  }
+  .jeu.est-abandonné { opacity: .58; }
+  .jeu .haut { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+  .jeu h2 { margin: 0; font-size: 1.15rem; letter-spacing: -.01em; }
+  .jeu .slug { font-size: .75rem; color: var(--mort); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .jeu .pitch { margin: .6rem 0 .85rem; color: var(--doux); font-size: .92rem; flex: 1; }
+
+  .pilule {
+    flex-shrink: 0; font-size: .72rem; font-weight: 600; padding: .2rem .55rem;
+    border-radius: 999px; background: var(--neutre-fond); color: var(--doux);
+    text-transform: uppercase; letter-spacing: .04em;
+  }
+  .pilule.retenu { background: var(--ok-fond); color: var(--ok); }
+  .pilule.extrait { background: var(--info-fond); color: var(--info); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .85rem; }
+  .tag { font-size: .74rem; padding: .15rem .5rem; border-radius: 6px; background: var(--neutre-fond); color: var(--doux); }
+
+  .note { display: flex; align-items: center; gap: .6rem; margin-bottom: .9rem; font-size: .82rem; color: var(--doux); }
+  .note .total { font-weight: 700; color: var(--texte); font-size: .95rem; }
+  .barres { display: flex; gap: 3px; }
+  .barres i { width: 22px; height: 6px; border-radius: 3px; background: var(--neutre-fond); }
+  .barres i[data-plein] { background: var(--accent); }
+  .barres i[data-faible] { background: #ef4444; }
+
+  .actions { display: flex; gap: .5rem; }
+  .actions a {
+    flex: 1; text-align: center; text-decoration: none; font-size: .88rem; font-weight: 600;
+    padding: .55rem .75rem; border-radius: 8px;
+    border: 1px solid var(--bord); color: var(--texte); background: transparent;
+  }
+  .actions a.jouer { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .vide { padding: 3rem 1rem; text-align: center; color: var(--doux); }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9em; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>playground-games</h1>
+    <p>
+      L'atelier. On enchaîne les prototypes, on les note sur la
+      <a href="https://github.com/Capitaine-Muffin/playground-games/blob/main/SELECTION.md">grille de sélection</a>,
+      et les meilleurs partent dans leur propre dépôt.
+    </p>
+  </header>
+
+  <div class="stats" id="stats"></div>
+  <div class="filtres" id="filtres"></div>
+  <div class="grille" id="grille"></div>
+</div>
+
+<script>
+const FILTRES = [
+  { cle: 'tous',      label: 'Tous',        test: () => true },
+  { cle: 'a-noter',   label: 'À noter',     test: (j) => !j.note && j.status === 'prototype' },
+  { cle: 'retenu',    label: 'Retenus',     test: (j) => j.status === 'retenu' },
+  { cle: 'extrait',   label: 'Extraits',    test: (j) => j.status === 'extrait' },
+  { cle: 'abandonne', label: 'Abandonnés',  test: (j) => j.status === 'abandonné' },
+];
+const CRITERES = ['fun30s', 'rejouabilite', 'originalite', 'montrable'];
+
+let jeux = [];
+let filtreActif = 'tous';
+
+const el = (tag, props = {}, ...enfants) => {
+  const n = Object.assign(document.createElement(tag), props);
+  for (const e of enfants.flat()) if (e != null) n.append(e);
+  return n;
+};
+
+function carte(j) {
+  const c = el('article', { className: `jeu est-${j.status}` });
+
+  c.append(el('div', { className: 'haut' },
+    el('div', {},
+      el('h2', { textContent: j.title }),
+      el('div', { className: 'slug', textContent: j.slug })),
+    el('span', { className: `pilule ${j.status}`, textContent: j.status })));
+
+  c.append(el('p', { className: 'pitch', textContent: j.pitch }));
+
+  const tags = (j.genre || []).map((g) => el('span', { className: 'tag', textContent: g }));
+  if (j.controls) tags.push(el('span', { className: 'tag', textContent: j.controls }));
+  if (tags.length) c.append(el('div', { className: 'tags' }, tags));
+
+  // La note ne s'affiche que si les 4 critères sont remplis — une note partielle
+  // induirait en erreur sur le seuil d'extraction.
+  if (j.note) {
+    const barres = el('div', { className: 'barres' },
+      CRITERES.map((cr) => {
+        const n = j.scores[cr];
+        const b = el('i', { title: `${cr} : ${n}/5` });
+        if (n >= 3) b.dataset.plein = '';
+        else b.dataset.faible = '';
+        return b;
+      }));
+    c.append(el('div', { className: 'note' },
+      el('span', { className: 'total', textContent: `${j.total}/20` }),
+      barres,
+      j.atteintSeuil ? el('span', { textContent: '✓ passe le seuil' }) : null));
+  } else {
+    c.append(el('div', { className: 'note' }, el('span', { textContent: 'pas encore noté' })));
+  }
+
+  const actions = el('div', { className: 'actions' },
+    el('a', { className: 'jouer', href: `games/${j.slug}/`, textContent: 'Jouer' }),
+    el('a', {
+      href: j.repo || `https://github.com/Capitaine-Muffin/playground-games/tree/main/games/${j.slug}`,
+      textContent: j.repo ? 'Son dépôt' : 'Code',
+    }));
+  c.append(actions);
+  return c;
+}
+
+function rendre() {
+  const grille = document.getElementById('grille');
+  const visibles = jeux.filter(FILTRES.find((f) => f.cle === filtreActif).test);
+  grille.replaceChildren(...visibles.map(carte));
+  if (!visibles.length) {
+    grille.replaceChildren(el('p', { className: 'vide', textContent: 'Aucun jeu dans cette catégorie.' }));
+  }
+  for (const b of document.querySelectorAll('.filtres button')) {
+    b.setAttribute('aria-pressed', String(b.dataset.cle === filtreActif));
+  }
+}
+
+function initFiltres() {
+  document.getElementById('filtres').replaceChildren(...FILTRES.map((f) => {
+    const n = jeux.filter(f.test).length;
+    const b = el('button', { textContent: `${f.label} (${n})` });
+    b.dataset.cle = f.cle;
+    b.onclick = () => { filtreActif = f.cle; rendre(); };
+    return b;
+  }));
+}
+
+function initStats() {
+  const stats = [
+    ['Jeux produits', jeux.length],
+    ['Notés', jeux.filter((j) => j.note).length],
+    ['Passent le seuil', jeux.filter((j) => j.atteintSeuil).length],
+    ['Extraits', jeux.filter((j) => j.status === 'extrait').length],
+  ];
+  document.getElementById('stats').replaceChildren(...stats.map(([label, valeur]) =>
+    el('div', { className: 'stat' },
+      el('b', { textContent: String(valeur) }),
+      el('span', { textContent: label }))));
+}
+
+fetch('games.json')
+  .then((r) => r.json())
+  .then((data) => {
+    jeux = data.games;
+    initStats();
+    initFiltres();
+    rendre();
+  })
+  .catch(() => {
+    document.getElementById('grille').replaceChildren(
+      el('p', { className: 'vide' },
+        el('span', { textContent: 'Impossible de charger games.json. En local, sers le dossier : ' }),
+        el('code', { textContent: 'python3 -m http.server 8000' })));
+  });
+</script>
+</body>
+</html>

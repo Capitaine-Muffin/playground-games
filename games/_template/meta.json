@@ -1,0 +1,16 @@
+{
+  "title": "Titre du jeu",
+  "pitch": "Une phrase qui donne envie d'essayer, pas une description.",
+  "genre": [],
+  "controls": "1 touche",
+  "created": "AAAA-MM-JJ",
+  "status": "prototype",
+  "repo": null,
+  "scores": {
+    "fun30s": null,
+    "rejouabilite": null,
+    "originalite": null,
+    "montrable": null
+  },
+  "notes": ""
+}
