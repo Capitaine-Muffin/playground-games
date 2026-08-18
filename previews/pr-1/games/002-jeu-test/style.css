@@ -24,8 +24,8 @@ p { margin: 0; color: #71717a; font-size: .9em; }
   width: clamp(3.5rem, 16vw, 5.5rem);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: #f43f5e;
-  box-shadow: inset -.6rem -.6rem 0 rgba(0, 0, 0, .12), 0 1.2rem 1rem rgba(244, 63, 94, .22);
+  background: #facc15;
+  box-shadow: inset -.6rem -.6rem 0 rgba(0, 0, 0, .12), 0 1.2rem 1rem rgba(250, 204, 21, .25);
   animation: rebond 1s ease-in-out infinite alternate;
 }
 
