@@ -21,6 +21,27 @@
       "total": null,
       "note": false,
       "atteintSeuil": false
+    },
+    {
+      "slug": "002-jeu-test",
+      "title": "Je teste",
+      "pitch": "Une balle rose rebondit au milieu d'une page blanche.",
+      "genre": [
+        "test"
+      ],
+      "controls": "aucun",
+      "created": "2026-08-18",
+      "status": "prototype",
+      "repo": null,
+      "scores": {
+        "fun30s": null,
+        "rejouabilite": null,
+        "originalite": null,
+        "montrable": null
+      },
+      "total": null,
+      "note": false,
+      "atteintSeuil": false
     }
   ]
 }
