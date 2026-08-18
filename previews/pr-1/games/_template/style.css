@@ -1,0 +1,71 @@
+/* Squelette d'habillage commun aux jeux. À copier et adapter — pas à factoriser. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #12141a;
+  color: #eef1f6;
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  /* Empêche le zoom au double-tap et le scroll élastique pendant qu'on joue */
+  touch-action: manipulation;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+canvas { display: block; touch-action: none; }
+
+#hud {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 max(1.25rem, env(safe-area-inset-left));
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+#score { font-size: 2rem; font-weight: 700; letter-spacing: -.02em; }
+#best  { font-size: .85rem; color: #8b93a3; align-self: center; }
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  padding: 2rem;
+  text-align: center;
+  background: rgba(12, 14, 19, .82);
+  backdrop-filter: blur(6px);
+}
+#overlay.visible { display: flex; }
+#overlay h1 { font-size: clamp(1.8rem, 8vw, 3rem); letter-spacing: -.03em; }
+#overlay p { color: #a7aec0; max-width: 32ch; }
+#overlay .cta { margin-top: .75rem; color: #eef1f6; font-weight: 600; }
+
+kbd {
+  font: inherit; font-size: .85em;
+  padding: .1em .45em;
+  border: 1px solid #39404f;
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: #1c2029;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #overlay { backdrop-filter: none; }
+}

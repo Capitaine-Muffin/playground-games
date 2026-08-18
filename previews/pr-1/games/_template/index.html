@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#12141a">
+<title>Titre du jeu</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='rgb(100,116,139)'/%3E%3Crect%20x='6'%20y='21'%20width='20'%20height='5'%20rx='1.5'%20fill='rgba(255,255,255,.95)'/%3E%3Crect%20x='8.5'%20y='14'%20width='15'%20height='5'%20rx='1.5'%20fill='rgba(255,255,255,.72)'/%3E%3Crect%20x='11'%20y='7'%20width='10'%20height='5'%20rx='1.5'%20fill='rgba(255,255,255,.48)'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="scene">
+    <canvas id="canvas"></canvas>
+
+    <div id="hud">
+      <span id="score">0</span>
+      <span id="best">record 0</span>
+    </div>
+
+    <div id="overlay" class="visible">
+      <h1>Titre du jeu</h1>
+      <p id="consigne">Une phrase qui explique la seule chose à comprendre.</p>
+      <p class="cta">Appuie sur <kbd>Espace</kbd> ou touche l'écran</p>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>

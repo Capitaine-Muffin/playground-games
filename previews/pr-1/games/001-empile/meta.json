@@ -1,0 +1,16 @@
+{
+  "title": "Empile",
+  "pitch": "Un bloc glisse, tu le lâches. Ce qui dépasse tombe, et la tour rétrécit à chaque erreur.",
+  "genre": ["arcade", "précision"],
+  "controls": "1 touche",
+  "created": "2026-08-18",
+  "status": "prototype",
+  "repo": null,
+  "scores": {
+    "fun30s": null,
+    "rejouabilite": null,
+    "originalite": null,
+    "montrable": null
+  },
+  "notes": ""
+}
