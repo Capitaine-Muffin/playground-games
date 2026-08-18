@@ -95,7 +95,12 @@ if (erreurs.length) {
 const contenu = JSON.stringify({ games: jeux }, null, 2) + '\n';
 
 if (process.argv.includes('--check')) {
-  const actuel = existsSync(sortie) ? readFileSync(sortie, 'utf8') : '';
+  // Git peut convertir les fins de ligne en CRLF sous Windows. Le manifeste
+  // est identique dans ce cas : on contrôle son contenu, pas son encodage de
+  // fin de ligne, pour que la vérification soit la même partout.
+  const actuel = existsSync(sortie)
+    ? readFileSync(sortie, 'utf8').replace(/\r\n/g, '\n')
+    : '';
   if (actuel !== contenu) {
     console.error('✗ games.json est périmé — lance : node tools/build-index.mjs');
     process.exit(1);
