@@ -1,0 +1,32 @@
+name: Publier le site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Le site et les aperçus vivent sur la même branche gh-pages : une seule
+# publication à la fois, sinon deux pushes se marchent dessus.
+concurrency:
+  group: gh-pages
+
+jobs:
+  publier:
+    name: main → le site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Régénérer le manifeste
+        run: node tools/build-index.mjs
+
+      - name: Publier à la racine
+        run: tools/publier.sh .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

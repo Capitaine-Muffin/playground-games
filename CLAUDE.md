@@ -23,10 +23,29 @@ elles qui rendent l'extraction possible.
 3. **Zéro build.** HTML/CSS/JS natif servi en statique. Pas de npm, pas de
    bundler, pas de TypeScript, pas de CDN externe (le jeu doit marcher hors ligne).
 
+## Branches et PR
+
+`main` est le site en ligne : **ne jamais y pousser directement**. Tout part
+d'une branche courte et arrive par une PR.
+
+- un jeu → `jeu/<NNN-slug>` (ex. `jeu/002-mon-jeu`)
+- la structure, l'outillage, les docs → `atelier/<sujet>`
+
+Chaque PR publie automatiquement un aperçu jouable à
+`https://capitaine-muffin.github.io/playground-games/previews/pr-<N>/`, et un
+commentaire pose le lien. C'est là que le jeu se teste au téléphone — donc
+**ouvrir la PR tôt**, dès que le jeu est jouable, sans attendre qu'il soit fini.
+
+`games.json` est le seul fichier que deux branches peuvent se disputer. Il est
+généré : un conflit dessus ne se résout jamais à la main, on relance
+`node tools/build-index.mjs`.
+
 ## Créer un nouveau jeu
 
 ```bash
-cp -r games/_template games/00X-mon-jeu
+git switch main && git pull
+git switch -c jeu/002-mon-jeu
+cp -r games/_template games/002-mon-jeu
 ```
 
 Puis : remplir `meta.json`, coder dans `game.js`, et **toujours** finir par
@@ -60,6 +79,14 @@ pas seulement écrit. Servir en local et vérifier dans un navigateur :
 
 ```bash
 python3 -m http.server 8000
+```
+
+Avant de pousser, faire tourner les deux vérifications que la CI fera de toute
+façon — c'est plus rapide que d'attendre une PR rouge :
+
+```bash
+node tools/build-index.mjs      # regénère games.json
+node tools/verifier-jeux.mjs    # autonomie, pas de ressource externe, syntaxe
 ```
 
 ## Notation et extraction

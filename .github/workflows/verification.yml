@@ -1,0 +1,24 @@
+name: Vérification
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verifier:
+    name: Règles du dépôt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Un jeu absent de games.json n'apparaît pas dans le hub : autant que la
+      # PR le dise, plutôt que de le découvrir une fois en ligne.
+      - name: games.json à jour
+        run: node tools/build-index.mjs --check
+
+      - name: Autonomie des jeux et absence de ressource externe
+        run: node tools/verifier-jeux.mjs
