@@ -111,6 +111,17 @@ dans la minute, et c'est là qu'on teste au téléphone.
 Numérotation : le numéro suivant se lit avec `ls games/`. On ne renumérote jamais
 un jeu existant, même si un jeu intermédiaire est supprimé.
 
+## Créer un jeu avec l'IA
+
+Pas besoin de connaître Git. Il suffit de décrire le jeu à l'IA. Elle crée une
+branche dédiée, code le prototype, le vérifie, ouvre une PR de brouillon et donne
+le lien à ouvrir sur téléphone.
+
+Pour demander une modification, décris simplement ce que tu veux changer (par
+exemple : « rends la balle jaune »). L'IA met à jour la même branche et le même
+lien de test : il suffit de rafraîchir la page sur le téléphone. La mise en ligne
+définitive ne se fait qu'après une demande explicite de fusion de la PR.
+
 ## Extraire un jeu retenu
 
 Quand un jeu passe le seuil de `SELECTION.md`, il part dans son propre dépôt
